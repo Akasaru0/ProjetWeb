@@ -71,7 +71,7 @@ class ControleurSecurity extends Controleur
     public function deconnecter()
     {
         $this->requete->getSession()->detruire();
-        $this->rediriger("accueil");
+        // $this->rediriger("accueil");
     }
 
 }

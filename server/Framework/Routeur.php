@@ -2,7 +2,6 @@
 
 require_once 'Controleur.php';
 require_once 'Requete.php';
-require_once 'Vue.php';
 
 /*
  * Classe de routage des requêtes entrantes.
@@ -31,7 +30,7 @@ class Routeur {
             $controleur->executerAction($action);
         }
         catch (Exception $e) {
-            $this->gererErreur($e);
+            throw $e;
         }
     }
 
@@ -80,16 +79,6 @@ class Routeur {
             $action = $requete->getParametre('action');
         }
         return $action;
-    }
-
-    /**
-     * Gère une erreur d'exécution (exception)
-     * 
-     * @param Exception $exception Exception qui s'est produite
-     */
-    private function gererErreur(Exception $exception) {
-        $vue = new Vue('erreur');
-        $vue->generer(array('msgErreur' => $exception->getMessage()));
     }
 
 }

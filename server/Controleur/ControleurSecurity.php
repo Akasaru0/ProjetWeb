@@ -38,12 +38,14 @@ class ControleurSecurity extends Controleur
         }
         else
         {
+            http_response_code(405);
             throw new Exception("Requete POST uniquement pour s'inscrire");
         }
     }
 
     public function connecter()
     {
+        header('Access-Control-Allow-Origin: *');
         if ($_SERVER['REQUEST_METHOD']==='POST'){
 
             $login = $_POST["mail"];
@@ -55,16 +57,19 @@ class ControleurSecurity extends Controleur
                         $utilisateur['id']);
                 $this->requete->getSession()->setAttribut("mail",
                         $utilisateur['mail']);
-                print_r($utilisateur);  //return the user
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode($utilisateur);
             }
             else
             {
-                throw new Exception("Login ou mot de passe incorrects");
+                http_response_code(401);
+                die("Login ou mot de passe incorrects");
             }
 
         }else
-        {            
-            throw new Exception("Requete POST uniquement pour se connecter");
+        {         
+            http_response_code(405);
+            die("Requete POST uniquement pour se connecter");
         }
     }
 

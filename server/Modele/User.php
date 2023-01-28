@@ -5,9 +5,11 @@ require_once 'Framework/Modele.php';
 class User extends Modele
 {
     public function createUser($username, $mdp, $mail){
-        $sql = "insert into user (username, password, mail) values (?,?,?)";
+        $activation_token = bin2hex(random_bytes(20));
+        $sql = "insert into user (username, password, mail, activation_token) values (?,?,?,?)";
         $hash_mdp = $this->getHashedPassword($mdp);
-        $this->executerRequete($sql, array($username, $hash_mdp, $mail));
+        $this->executerRequete($sql, array($username, $hash_mdp, $mail,$activation_token));
+        return $activation_token;
     }
 
     /**
@@ -60,6 +62,18 @@ class User extends Modele
             $utilisateur_obj = $utilisateur->fetch(PDO::FETCH_ASSOC);
             $hashed = $utilisateur_obj['password'];
             return password_verify($mdp, $hashed);
+        }
+    }
+
+    public function activerCompte($token){
+        $sql = "select * from user where activation_token=?";
+        $utilisateur = $this->executerRequete($sql, array($token));
+
+        if ($utilisateur->rowCount() != 1) return false;
+        else{
+            $sql = "update user set activated=1 where activation_token=?";
+            $utilisateur = $this->executerRequete($sql, array($token));
+            return true;
         }
     }
 }

@@ -119,4 +119,66 @@ class ControleurSecurity extends Controleur
         }
     }
 
+    public function reset()
+    {
+        if ($_SERVER['REQUEST_METHOD']==='POST'){
+            try {
+                $mail = $this->requete->getParametre("mail");
+                $user = $this->utilisateur->getUtilisateurByMail($mail);
+                $token = bin2hex(random_bytes(20));
+                $user_id = $user["id"];
+                $this->utilisateur->setActivationToken($user_id,$token);
+                $url_reset = Configuration::get("url_reset",'http://localhost/projetWeb/ProjetWeb/server/index.php?controleur=Security&action=reset');;
+                $to      = $mail;
+                $subject = 'Reinitialisation du mot de passe';
+                $message = "<html><head>Mot de passe temporaire:</head><body>";
+                $message .= '<a href="';
+                $message .= $url_reset;
+                $message .= "&token=";
+                $message .= $token;
+                $message .= '">Cliquez ici</a>';
+                $message .= "</body></html>";
+                $this->mailer->send("no-reply@web.project",$to,$subject,$message);
+
+                echo "vérifiez vos mails pour réinitialiser votre mot de passe";
+            }catch(Exception $e){
+                http_response_code(400);
+                die("Parametre 'mail' manquant ou invalide"); 
+            }            
+        }elseif($_SERVER['REQUEST_METHOD']==='GET')
+        {
+            if($this->requete->existeParametre("token")){
+                $token = $this->requete->getParametre("token");
+                if($this->utilisateur->existeToken($token)){
+                    // TODO change password and send the new one
+                    $temp_mdp = bin2hex(random_bytes(15)); //temporary password
+                    $utilisateur = $this->utilisateur->getUtilisateurByToken($token);
+                    if(!$utilisateur["change_password"]){
+                        $user_id = $utilisateur["id"];
+                        $this->utilisateur->setTemporaryPassword($user_id,$temp_mdp);
+                        // send mail of the new pwd
+                        $to      = $utilisateur["mail"];
+                        $subject = 'Reinitialisation du mot de passe';
+                        $message = "<html><head>Mot de passe temporaire:</head><body>";
+                        $message .= $temp_mdp;
+                        $message .= "</body></html>";
+                        $this->mailer->send("no-reply@web.project",$to,$subject,$message);
+                        echo "Votre mot de passe a été envoyé par mail.";
+                    }else{
+                        http_response_code(400);
+                        die("Vous n'avez pas fait de demande de réinitialisation"); 
+                    }
+                }else{
+                    http_response_code(400);
+                    die("Parametre 'token' invalide"); 
+                }
+            }else{
+                http_response_code(400);
+                die("Parametre 'token' manquant"); 
+            }
+        }else{
+            http_response_code(405);
+            die("Requete POST / GET uniquement");  
+        }
+    }
 }

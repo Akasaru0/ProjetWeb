@@ -129,4 +129,10 @@ class User extends Modele
         $hash = $this->getHashedPassword($temp_mdp);
         $this->executerRequete($sql, array($hash,$user_id));
     }
+
+    public function setPassword($user_id,$mdp){
+        $sql = "update user set password=?, change_password=0 where id=?";
+        $hash_mdp = $this->getHashedPassword($mdp);
+        $this->executerRequete($sql, array($hash_mdp, $user_id));
+    }
 }

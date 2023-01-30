@@ -181,4 +181,22 @@ class ControleurSecurity extends Controleur
             die("Requete POST / GET uniquement");  
         }
     }
+
+    function changer_mdp(){
+        if($_SERVER["REQUEST_METHOD"]==="GET"){
+            try {
+                $mdp = $_POST["mdp"];
+                $user_id = $_POST["id"];
+                $this->utilisateur->setPassword($user_id,$mdp);
+                echo "Votre mot de passe a été modifié avec succès.";
+            } catch (Exception $e) {
+                http_response_code(400);
+                die("Paramètres invalides");  
+            }
+        }else{
+            http_response_code(405);
+            die("Requete POST uniquement");  
+        }
+    }
+
 }

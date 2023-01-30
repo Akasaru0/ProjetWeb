@@ -80,6 +80,23 @@ class User extends Modele
     }
 
     /**
+     * Renvoie un utilisateur existant dans la BD
+     * 
+     * @param string $token le token
+     * @return mixed L'utilisateur
+     * @throws Exception Si aucun utilisateur ne correspond aux paramètres
+     */
+    public function getUtilisateurById($id)
+    {
+        $sql = "select * from user where id=?";
+        $utilisateur = $this->executerRequete($sql, array($id));
+        if ($utilisateur->rowCount() == 1){
+            return $utilisateur->fetch();  // Accès à la première ligne de résultat
+        }        
+        throw new Exception("Aucun utilisateur ne correspond aux identifiants fournis");
+    }
+
+    /**
      * Vérifie qu'un utilisateur existe dans la BD
      * 
      * @param string $login Le login

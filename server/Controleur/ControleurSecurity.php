@@ -183,12 +183,21 @@ class ControleurSecurity extends Controleur
     }
 
     function changer_mdp(){
-        if($_SERVER["REQUEST_METHOD"]==="GET"){
+        if($_SERVER["REQUEST_METHOD"]==="POST"){
             try {
+                $ancien_mdp = $_POST["ancien_mdp"];
                 $mdp = $_POST["mdp"];
-                $user_id = $_POST["id"];
-                $this->utilisateur->setPassword($user_id,$mdp);
-                echo "Votre mot de passe a été modifié avec succès.";
+                $mail = $_POST["mail"];
+                $user = $this->utilisateur->getUtilisateurByMail($mail);
+                $user_id = $user["id"];
+                if($this->utilisateur->connecter($mail,$ancien_mdp)){
+                    $this->utilisateur->setPassword($user_id,$mdp);
+                    echo "Votre mot de passe a été modifié avec succès.";
+                }else{
+                    // someone tried to modify another account password , :/
+                    http_response_code(403);
+                    die("Vous avez essayé de modifier le mot de passe d'un autre utilisateur, ou vous vous êtes tromper de mot de passe");
+                }
             } catch (Exception $e) {
                 http_response_code(400);
                 die("Paramètres invalides");  

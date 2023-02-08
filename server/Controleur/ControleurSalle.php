@@ -63,8 +63,19 @@ class ControleurSalle extends Controleur {
         header('Access-Control-Allow-Origin: *');
         if($this->requete->getSession()->existeAttribut("mail")){
             $user_id = $this->requete->getSession()->getAttribut("id_user");
-            if($this->utilisateur->isGranted($user_id,"ADMIN")){
-                echo "ok";
+            if($this->utilisateur->isGranted($user_id,"EDITOR")){
+                $parametres = array("nom","adresse","image");
+                if($this->requete->existeParametres($parametres)){
+                    $nom = $this->requete->getParametre("nom");
+                    $adresse = $this->requete->getParametre("adresse");
+                    $image = $this->requete->getParametre("image");
+                    $this->salle->createSalle($nom,$adresse,$image);
+                    echo "La salle a été créée";
+                }else{
+                    http_response_code(400);
+                    die("parametres manquants");  
+                }
+                //TODO
             }else{
                 http_response_code(403);
                 die("vous n'avez pas les droits pour faire cette action");  
@@ -77,7 +88,32 @@ class ControleurSalle extends Controleur {
     }
 
     public function edit(){
-
+        header('Access-Control-Allow-Origin: *');
+        if($this->requete->getSession()->existeAttribut("mail")){
+            $user_id = $this->requete->getSession()->getAttribut("id_user");
+            if($this->utilisateur->isGranted($user_id,"EDITOR")){
+                $parametres = array("nom","adresse","image","id_salle");
+                if($this->requete->existeParametres($parametres)){
+                    $idSalle = $this->requete->getParametre("id_salle");
+                    $nom = $this->requete->getParametre("nom");
+                    $adresse = $this->requete->getParametre("adresse");
+                    $image = $this->requete->getParametre("image");
+                    $this->salle->editSalle($nom,$adresse,$image,$idSalle);
+                    echo "La salle a été modifié";
+                }else{
+                    http_response_code(400);
+                    die("parametres manquants");  
+                }
+                //TODO
+            }else{
+                http_response_code(403);
+                die("vous n'avez pas les droits pour faire cette action");  
+            }
+            
+        }else{
+            http_response_code(403);
+            die("vous devez être connecté pour continuer");  
+        }
     }
 
 }

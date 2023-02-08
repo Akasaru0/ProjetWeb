@@ -4,6 +4,16 @@ require_once 'Framework/Modele.php';
 
 class Salle extends Modele
 {
+    public function createSalle($nom,$adresse,$image){
+        $sql = "insert into salle (nom,adresse,image_path) values (?,?,?)";
+        $this->executerRequete($sql,array($nom,$adresse,$image));
+    }
+
+    public function editSalle($idSalle,$nom,$adresse,$image){
+        $sql = "update salle set nom=?, adresse=?,image_path=? where id=?";
+        $this->executerRequete($sql,array($nom,$adresse,$image,$idSalle));
+    }
+
     public function getSalle($idSalle){
         $sql = "select * from salle where id=?";
         $salle = $this->executerRequete($sql, array($idSalle));

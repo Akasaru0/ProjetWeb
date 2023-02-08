@@ -19,7 +19,7 @@ class User extends Modele
      * @return string le mot de passe hash
      */
     protected function getHashedPassword($mdp){
-        return password_hash($mdp,PASSWORD_BCRYPT);
+        return password_hash($mdp,PASSWORD_DEFAULT);
     }
 
     /**
@@ -151,5 +151,24 @@ class User extends Modele
         $sql = "update user set password=?, change_password=0 where id=?";
         $hash_mdp = $this->getHashedPassword($mdp);
         $this->executerRequete($sql, array($hash_mdp, $user_id));
+    }
+
+    public function getRoles($user_id){
+        $sql = "select roles from user where id=?";
+        $roles = $this->executerRequete($sql, array($user_id));
+        if($roles->rowCount() != 1){
+            return false; // user not found
+        }else{
+            return $roles->fetch(); //return the role
+        }
+    }
+
+    public function isGranted($user_id,$role){
+        $roles = $this->getRoles($user_id);
+        if(!$roles){
+            return false; // user not found
+        }else{
+            return strpos($roles["roles"],$role) !== false; 
+        }
     }
 }

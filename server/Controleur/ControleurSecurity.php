@@ -78,7 +78,7 @@ class ControleurSecurity extends Controleur
             if ($this->utilisateur->connecter($login, $mdp)) 
             {
                 $utilisateur = $this->utilisateur->getUtilisateur($login, $mdp);
-                $this->requete->getSession()->setAttribut("id",
+                $this->requete->getSession()->setAttribut("id_user",
                         $utilisateur['id']);
                 $this->requete->getSession()->setAttribut("mail",
                         $utilisateur['mail']);
@@ -101,6 +101,7 @@ class ControleurSecurity extends Controleur
     public function deconnecter()
     {
         $this->requete->getSession()->detruire();
+        echo "vous avez été déconnecté";
         // $this->rediriger("accueil");
     }
 

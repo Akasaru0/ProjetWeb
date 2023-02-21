@@ -78,7 +78,7 @@ class ControleurSecurity extends Controleur
             if ($this->utilisateur->connecter($login, $mdp)) 
             {
                 $utilisateur = $this->utilisateur->getUtilisateur($login, $mdp);
-                $this->requete->getSession()->setAttribut("id",
+                $this->requete->getSession()->setAttribut("id_user",
                         $utilisateur['id']);
                 $this->requete->getSession()->setAttribut("mail",
                         $utilisateur['mail']);
@@ -101,6 +101,7 @@ class ControleurSecurity extends Controleur
     public function deconnecter()
     {
         $this->requete->getSession()->detruire();
+        echo "vous avez été déconnecté";
         // $this->rediriger("accueil");
     }
 
@@ -181,4 +182,31 @@ class ControleurSecurity extends Controleur
             die("Requete POST / GET uniquement");  
         }
     }
+
+    function changer_mdp(){
+        if($_SERVER["REQUEST_METHOD"]==="POST"){
+            try {
+                $ancien_mdp = $_POST["ancien_mdp"];
+                $mdp = $_POST["mdp"];
+                $mail = $_POST["mail"];
+                $user = $this->utilisateur->getUtilisateurByMail($mail);
+                $user_id = $user["id"];
+                if($this->utilisateur->connecter($mail,$ancien_mdp)){
+                    $this->utilisateur->setPassword($user_id,$mdp);
+                    echo "Votre mot de passe a été modifié avec succès.";
+                }else{
+                    // someone tried to modify another account password , :/
+                    http_response_code(403);
+                    die("Vous avez essayé de modifier le mot de passe d'un autre utilisateur, ou vous vous êtes tromper de mot de passe");
+                }
+            } catch (Exception $e) {
+                http_response_code(400);
+                die("Paramètres invalides");  
+            }
+        }else{
+            http_response_code(405);
+            die("Requete POST uniquement");  
+        }
+    }
+
 }

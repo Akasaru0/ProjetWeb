@@ -19,7 +19,7 @@ class User extends Modele
      * @return string le mot de passe hash
      */
     protected function getHashedPassword($mdp){
-        return password_hash($mdp,PASSWORD_BCRYPT);
+        return password_hash($mdp,PASSWORD_DEFAULT);
     }
 
     /**
@@ -80,6 +80,23 @@ class User extends Modele
     }
 
     /**
+     * Renvoie un utilisateur existant dans la BD
+     * 
+     * @param string $token le token
+     * @return mixed L'utilisateur
+     * @throws Exception Si aucun utilisateur ne correspond aux paramètres
+     */
+    public function getUtilisateurById($id)
+    {
+        $sql = "select * from user where id=?";
+        $utilisateur = $this->executerRequete($sql, array($id));
+        if ($utilisateur->rowCount() == 1){
+            return $utilisateur->fetch();  // Accès à la première ligne de résultat
+        }        
+        throw new Exception("Aucun utilisateur ne correspond aux identifiants fournis");
+    }
+
+    /**
      * Vérifie qu'un utilisateur existe dans la BD
      * 
      * @param string $login Le login
@@ -128,5 +145,30 @@ class User extends Modele
         $sql = "update user set password=?, change_password=1 where id=?";
         $hash = $this->getHashedPassword($temp_mdp);
         $this->executerRequete($sql, array($hash,$user_id));
+    }
+
+    public function setPassword($user_id,$mdp){
+        $sql = "update user set password=?, change_password=0 where id=?";
+        $hash_mdp = $this->getHashedPassword($mdp);
+        $this->executerRequete($sql, array($hash_mdp, $user_id));
+    }
+
+    public function getRoles($user_id){
+        $sql = "select roles from user where id=?";
+        $roles = $this->executerRequete($sql, array($user_id));
+        if($roles->rowCount() != 1){
+            return false; // user not found
+        }else{
+            return $roles->fetch(); //return the role
+        }
+    }
+
+    public function isGranted($user_id,$role){
+        $roles = $this->getRoles($user_id);
+        if(!$roles){
+            return false; // user not found
+        }else{
+            return strpos($roles["roles"],$role) !== false; 
+        }
     }
 }

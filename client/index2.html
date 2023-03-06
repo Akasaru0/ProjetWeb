@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script>
     $(document).ready(function(){
         $("#validate").on("click",function() {
@@ -10,7 +11,9 @@
             $.ajax({
                 url:"http://localhost/projetWeb/ProjetWeb/server/Security/connecter/",
                 type: "POST",
-                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
                 data:{
                     "mail":mail,
                     "mdp":mdp,
@@ -18,6 +21,22 @@
                 success: function (response) {
                 console.log(response)
             },
+            });
+        });
+        $("#test").on("click",function(){
+            $.ajax({
+                url:"http://localhost/projetWeb/ProjetWeb/server/Salle/getsalle/1",
+                type: "GET",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(response) {
+                    // handle success response
+                    console.log(response)
+                },
+                error: function(xhr, status, error) {
+                    // handle error response
+                }
             });
         });
     })
@@ -35,12 +54,11 @@
         <tbody>
             <tr>
                 <td><input id="mail_input"></td>
-                <td><input id="mdp_input"></td>
+                <td><input id="mdp_input" type="password"></td>
             </tr>
         </tbody>
     </table>
     <button id="validate">VALIDER</button>
-
-
+<button id="test">TESTER</button>
 </body>
 </html>

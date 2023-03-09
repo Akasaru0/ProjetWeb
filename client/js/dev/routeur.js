@@ -1,6 +1,18 @@
 export class Routeur{
     constructor(){
         this.baseRouteur = "/client/html/";
+        this.queryString = window.location.search;
+        if(this.queryString!=""){
+            var urlParams = new URLSearchParams(this.queryString);
+            try {
+                console.log(urlParams.get('routage'))
+                const product = urlParams.get('routage');
+                const file = product+".html";
+                this.includeHtmlFile(file);
+            } catch (error) {
+                alert("ah")
+            }
+        }
     }
 
     routerRequete(page){

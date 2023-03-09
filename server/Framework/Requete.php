@@ -45,6 +45,13 @@ class Requete {
         return (isset($this->parametres[$nom]) && $this->parametres[$nom] != "");
     }
 
+    public function existeParametres($array_nom){
+        foreach ($array_nom as $nom) {
+            if(!$this->existeParametre($nom))return false;
+        }
+        return true;
+    }
+
     /**
      * Renvoie la valeur du paramètre demandé
      * 

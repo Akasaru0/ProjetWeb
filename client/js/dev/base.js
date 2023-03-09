@@ -5,7 +5,9 @@ import { Routeur } from './routeur.js';
 var routeur = new Routeur();
 
 $(document).ready(function(){
-    routeur.includeHtmlFile();
+    if(routeur.queryString==""){
+        routeur.includeHtmlFile();
+    }
     isConnected(setButtonConnexion);
 });
 

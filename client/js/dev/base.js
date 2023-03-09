@@ -1,5 +1,3 @@
-import { initConnexion } from './connexion.js';
-import { initSalles } from './salles.js';
 import { Routeur } from './routeur.js';
 
 var routeur = new Routeur();
@@ -15,7 +13,7 @@ $(document).ready(function(){
 
 function isConnected(action=false){
     $.ajax({
-        url:"http://localhost/projetWeb/ProjetWeb/server/Security/isconnecte/",
+        url:"http://localhost/ProjetWeb/server/Security/isconnecte/",
         type:"GET",
         xhrFields: {
             withCredentials: true
@@ -45,7 +43,7 @@ function setButtonConnexion(bool){
 
 function deconnexion(){
     $.ajax({
-        url:"http://localhost/projetWeb/ProjetWeb/server/Security/deconnecter/",
+        url:"http://localhost/ProjetWeb/server/Security/deconnecter/",
         type:"GET",
         xhrFields: {
             withCredentials: true
@@ -61,14 +59,16 @@ $("#deconnexion").on("click",function(){
 });
 
 $("#connexion").on("click",function(){
-    routeur.includeHtmlFile("connexion.html",initConnexion);
+    window.location.href = "/client/?routage=connexion";
 })
 
 //-------------------------- FIN CONNEXION -----------------------------------
 
 //-------------------------- DEBUT SALLES -----------------------------------
 $("#salles").on("click",function(){
-    routeur.includeHtmlFile("salles.html",initSalles);
+    // routeur.includeHtmlFile("salles.html",initSalles);
+    window.location.href = "/client/?routage=salles";
+
 })
 //-------------------------- FIN SALLES -----------------------------------
 

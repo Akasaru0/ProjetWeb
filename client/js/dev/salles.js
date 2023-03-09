@@ -1,6 +1,6 @@
 function getSalles(){
     $.ajax({
-        url:"http://localhost/projetWeb/ProjetWeb/server/Salle/",
+        url:"http://localhost/projetWeb/server/Salle/",
         type: "GET",
         xhrFields: {
             withCredentials: true
@@ -9,7 +9,7 @@ function getSalles(){
             var data = response;
             var table = $('#table').DataTable();
             data.forEach(element => {
-                table.row.add([element.nom,element.adresse,'<a href="/client/html/blocs?id='+element.id+'">lien</a>']);
+                table.row.add([element.nom,element.adresse,'<a href="/client/?routage=blocs&id='+element.id+'">lien</a>']);
             });
             table.draw();
         },
@@ -19,10 +19,10 @@ function getSalles(){
     });
 }
 
-export function initSalles() {
+$(document).ready(function() {
     $('#table').DataTable();
     getSalles();
-}
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     // Add your code here to load and apply your CSS and JavaScript files

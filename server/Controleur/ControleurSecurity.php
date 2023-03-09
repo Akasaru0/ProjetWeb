@@ -70,7 +70,6 @@ class ControleurSecurity extends Controleur
 
     public function connecter()
     {
-        header('Access-Control-Allow-Origin: *');
         if ($_SERVER['REQUEST_METHOD']==='POST'){
 
             $login = $_POST["mail"];
@@ -83,7 +82,7 @@ class ControleurSecurity extends Controleur
                 $this->requete->getSession()->setAttribut("mail",
                         $utilisateur['mail']);
                 header('Content-Type: application/json; charset=utf-8');
-                echo json_encode($utilisateur);
+                echo json_encode([$utilisateur,session_id()]);
             }
             else
             {
@@ -95,6 +94,14 @@ class ControleurSecurity extends Controleur
         {         
             http_response_code(405);
             die("Requete POST uniquement pour se connecter");
+        }
+    }
+
+    public function isConnecte(){
+        if($this->requete->getSession()->existeAttribut("mail")){
+            echo json_encode(true);
+        }else{
+            echo json_encode(false); 
         }
     }
 

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <!-- En-tête de la page -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+ 		<link href="/client/css/lib/bootstrap.min.css" rel="stylesheet">
+ 		<link href="/client/css/dev/base.css" rel="stylesheet">
+		<script type="text/javascript" src="/client/js/lib/jquery.min.js"></script>
+        <script type="module" src="/client/js/dev/base.js"></script>
+    </header>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="/client/">SummitScore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto" id="nav" style="display: none;">
+                    <li class="nav-item">
+                        <a class="nav-link" id="salles">Salles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="admin">Administration [si rôle EDITOR]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile">Profil</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav me-auto" id="navEmpty" style="display: none;"></ul>
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="connexion" style="display: none;">Se Connecter</button>
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="deconnexion" style="display: none;">Se Déconnecter</button>
+            </div>
+            </div>
+        </nav>
+        <div id="content">
+            
+        </div>
+    </body>
+</html>

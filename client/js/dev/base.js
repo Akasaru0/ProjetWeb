@@ -29,11 +29,13 @@ function isConnected(action=false){
 function setButtonConnexion(bool){
     if(bool){
         $("#connexion")[0].style.display = "none";
+        $("#inscription")[0].style.display = "none";
         $("#deconnexion")[0].style.display = "block";
         $("#nav")[0].style.display = "flex";
         $("#navEmpty")[0].style.display = "none";
     }else{
         $("#connexion")[0].style.display = "block";
+        $("#inscription")[0].style.display = "block";
         $("#deconnexion")[0].style.display = "none";
         $("#nav")[0].style.display = "none";
         $("#navEmpty")[0].style.display = "flex";
@@ -60,6 +62,10 @@ $("#deconnexion").on("click",function(){
 
 $("#connexion").on("click",function(){
     window.location.href = "/client/?routage=connexion";
+})
+
+$("#inscription").on("click",function(){
+    window.location.href = "/client/?routage=inscription";
 })
 
 //-------------------------- FIN CONNEXION -----------------------------------

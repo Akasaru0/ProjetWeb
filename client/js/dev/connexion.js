@@ -15,7 +15,7 @@ function connexion(mail,mdp){
             window.location.href = "/client/";
         },
         error: function(response){
-            alert("Identifiants Invalides");
+            alert(response.responseText);
         },
     });
 }
@@ -23,5 +23,5 @@ function connexion(mail,mdp){
 $(document).ready(function() {
     $(document).on("click", "#submit", function() {
         connexion();
-      });
     });
+});

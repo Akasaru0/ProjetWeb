@@ -57,6 +57,8 @@ class Routeur {
         $fichierControleur = "Controleur/" . $classeControleur . ".php";
         if (file_exists($fichierControleur)) {
             // Instanciation du contrôleur adapté à la requête
+            header('Access-Control-Allow-Origin: http://127.0.0.1:8080');
+            header('Access-Control-Allow-Credentials: true');
             require($fichierControleur);
             $controleur = new $classeControleur();
             $controleur->setRequete($requete);

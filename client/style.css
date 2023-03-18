@@ -1,0 +1,103 @@
+*{
+   margin:0;
+   padding:0;
+   text-decoration: none;
+   list-style: none;
+}
+
+body{
+   font-family: Arial, Helvetica, sans-serif
+}
+
+header{
+   height: 100vh;
+   width:100vw;
+   background-image: url(image/landscape.jpg);
+   background-size: cover;
+}
+
+.navbar {
+   position: absolute;
+   padding : 50px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+   box-sizing: border-box;
+}
+
+.navbar a {
+   color : white;
+}
+
+.navbar .logo{
+   font-size: 2em;
+   font-weight: bold;
+}
+
+.navbar .nav-links ul {
+   display : flex;
+}
+
+.navbar .nav-links ul li{
+   margin: 0 25px;
+}
+
+.navbar .nav-links ul li.active a{
+   color : #ed3c57;
+   font-weight : 600;
+}
+
+.navbar .menu-hamburger{
+   display : none;
+   position: absolute;
+   top: 50px;
+   right: 30px;
+   width: 35px
+}
+
+@media screen and (max-width : 900px) {
+   .navbar{
+      padding: 0;
+   }
+
+   .navbar .logo{
+     position:absolute;
+     top: 40px;
+     left:30px;
+   }
+
+   .navbar .menu-hamburger{
+      display: block;
+   }
+
+ 
+   .nav-links{
+      top: 0;
+      left:0;
+      position: absolute;
+      background-color: rgba(255,255,255,0.2);
+      backdrop-filter : blur(7px);
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left : -100%;
+      transition: all 0.5s ease;
+   }
+
+   .nav-links.mobile-menu{
+      margin-left : 0;
+   }
+
+   .nav-links ul{
+      display: flex;
+      flex-direction: column;
+   }
+
+   .navbar .nav-links ul li{
+      margin: 25px 0;
+      font-size: 1.2em ;
+   }
+}

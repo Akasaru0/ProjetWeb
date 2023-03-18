@@ -1,11 +1,11 @@
-import { initConnexion } from './connexion.js';
-import { initSalles } from './salles.js';
 import { Routeur } from './routeur.js';
 
 var routeur = new Routeur();
 
 $(document).ready(function(){
-    routeur.includeHtmlFile();
+    if(routeur.queryString==""){
+        routeur.includeHtmlFile();
+    }
     isConnected(setButtonConnexion);
 });
 
@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 function isConnected(action=false){
     $.ajax({
-        url:"http://localhost/projetWeb/ProjetWeb/server/Security/isconnecte/",
+        url:"http://localhost/ProjetWeb/server/Security/isconnecte/",
         type:"GET",
         xhrFields: {
             withCredentials: true
@@ -29,11 +29,13 @@ function isConnected(action=false){
 function setButtonConnexion(bool){
     if(bool){
         $("#connexion")[0].style.display = "none";
+        $("#inscription")[0].style.display = "none";
         $("#deconnexion")[0].style.display = "block";
         $("#nav")[0].style.display = "flex";
         $("#navEmpty")[0].style.display = "none";
     }else{
         $("#connexion")[0].style.display = "block";
+        $("#inscription")[0].style.display = "block";
         $("#deconnexion")[0].style.display = "none";
         $("#nav")[0].style.display = "none";
         $("#navEmpty")[0].style.display = "flex";
@@ -43,7 +45,7 @@ function setButtonConnexion(bool){
 
 function deconnexion(){
     $.ajax({
-        url:"http://localhost/projetWeb/ProjetWeb/server/Security/deconnecter/",
+        url:"http://localhost/ProjetWeb/server/Security/deconnecter/",
         type:"GET",
         xhrFields: {
             withCredentials: true
@@ -59,14 +61,20 @@ $("#deconnexion").on("click",function(){
 });
 
 $("#connexion").on("click",function(){
-    routeur.includeHtmlFile("connexion.html",initConnexion);
+    window.location.href = "/client/?routage=connexion";
+})
+
+$("#inscription").on("click",function(){
+    window.location.href = "/client/?routage=inscription";
 })
 
 //-------------------------- FIN CONNEXION -----------------------------------
 
 //-------------------------- DEBUT SALLES -----------------------------------
 $("#salles").on("click",function(){
-    routeur.includeHtmlFile("salles.html",initSalles);
+    // routeur.includeHtmlFile("salles.html",initSalles);
+    window.location.href = "/client/?routage=salles";
+
 })
 //-------------------------- FIN SALLES -----------------------------------
 

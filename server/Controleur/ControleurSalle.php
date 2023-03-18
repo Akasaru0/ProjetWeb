@@ -17,7 +17,6 @@ class ControleurSalle extends Controleur {
     }
 
     public function index() {
-        header('Access-Control-Allow-Origin: *');
         if($this->requete->getSession()->existeAttribut("mail")){
             $salles = $this->salle->getAllSalle();
             header('Content-Type: application/json; charset=utf-8');
@@ -39,7 +38,6 @@ class ControleurSalle extends Controleur {
     }
 
     public function getSalle(){
-        header('Access-Control-Allow-Origin: *');
         if($this->requete->getSession()->existeAttribut("mail")){
             $idSalle = $this->requete->getParametre("id");
             $salle = $this->salle->getSalle($idSalle);
@@ -54,7 +52,6 @@ class ControleurSalle extends Controleur {
      * retourne les blocs de la salle associe
      */
     public function getBlocsSalle(){
-        header('Access-Control-Allow-Origin: *');
         if($this->requete->getSession()->existeAttribut("mail")){
             $idSalle = $this->requete->getParametre("id");
             $blocs = $this->salle->getBlocsSalle($idSalle);
@@ -70,7 +67,6 @@ class ControleurSalle extends Controleur {
      * is_granted : ADMIN
      */
     public function new(){
-        header('Access-Control-Allow-Origin: *');
         if($this->requete->getSession()->existeAttribut("mail")){
             $user_id = $this->requete->getSession()->getAttribut("id_user");
             if($this->utilisateur->isGranted($user_id,"EDITOR")){
@@ -98,7 +94,6 @@ class ControleurSalle extends Controleur {
     }
 
     public function edit(){
-        header('Access-Control-Allow-Origin: *');
         if($this->requete->getSession()->existeAttribut("mail")){
             $user_id = $this->requete->getSession()->getAttribut("id_user");
             if($this->utilisateur->isGranted($user_id,"EDITOR")){

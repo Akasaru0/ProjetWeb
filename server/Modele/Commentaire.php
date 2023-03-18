@@ -4,14 +4,14 @@ require_once 'Framework/Modele.php';
 
 class Commentaire extends Modele
 {
-    public function createCommentaire($description, $id_couleur, $id_salle){
-        $sql = "INSERT INTO `bloc`(`description`, `id_couleur`, `id_salle`) VALUES (?,?,?)";
+    public function createCommentaire($id_user, $date_creation, $id_bloc,$libelle){
+        $sql = "INSERT INTO `commentaire`(`id_user`, `date_creation`, `id_bloc`, `libelle`) VALUES ('?','?','?','?')";
         //$sql = "insert into bloc (username, password, mail, activation_token) values (?,?,?,?)";
-        $this->executerRequete($sql, array($description, $id_couleur, $id_salle));
+        $this->executerRequete($sql, array($id_user, $date_creation, $id_bloc,$libelle));
     }
-    public function getBloc($id_bloc){
+    public function getCommentaire($id_commentaire){
         $sql = "SELECT * FROM `bloc` WHERE id=?";
-        $resultat = $this->executerRequete($sql, array($id_bloc));
+        $resultat = $this->executerRequete($sql, array($id_commentaire));
         return $resultat->fetchAll();
     }
 }

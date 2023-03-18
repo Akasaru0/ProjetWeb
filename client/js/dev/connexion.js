@@ -1,10 +1,8 @@
-export var varIsConnected = false;
-
 function connexion(mail,mdp){
     var mail = $("#email").val();
     var mdp = $("#password").val();
     $.ajax({
-        url:"http://localhost/projetWeb/ProjetWeb/server/Security/connecter/",
+        url:"http://localhost/ProjetWeb/server/Security/connecter/",
         type: "POST",
         xhrFields: {
             withCredentials: true
@@ -17,13 +15,13 @@ function connexion(mail,mdp){
             window.location.href = "/client/";
         },
         error: function(response){
-            alert("Identifiants Invalides");
+            alert(response.responseText);
         },
     });
 }
 
-export function initConnexion() {
-    $("#submit").on("click",function(){
+$(document).ready(function() {
+    $(document).on("click", "#submit", function() {
         connexion();
     });
-}
+});

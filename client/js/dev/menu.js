@@ -2,6 +2,47 @@ $(document).ready(function() {
     isConnected(getStat);
 });
 
+function generateChart(){
+    
+    const ctx = document.getElementById('chart_user');
+    $.ajax({
+        url:"http://localhost/ProjetWeb/server/Stat/getAllVoteOfUserForChart/",
+        type: "GET",
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function(response){
+            let labels = [];
+            let data = [];
+            let i=0;
+            response.forEach(element => {
+                data.push(element["valeur"]);
+                labels.push(i);
+                i++;
+            });
+            new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Progression',
+                    data: data,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                y: {
+                    beginAtZero: true
+                }
+                }
+            }
+            });
+        },
+    })
+    
+}
+
 // Get the value of a cookie
 function getCookie(name) {
     const cookies = document.cookie.split(';');
@@ -100,7 +141,7 @@ function getStat(response){
             window.location.href = "/client/?routage=menu";
         },
     });
-
+    generateChart();
 }
 
 function isConnected(action=false){

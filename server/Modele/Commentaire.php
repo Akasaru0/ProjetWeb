@@ -10,7 +10,7 @@ class Commentaire extends Modele
         $this->executerRequete($sql, array($id_user, $date_creation, $id_bloc,$libelle));
     }
     public function getCommentaire($id_commentaire){
-        $sql = "SELECT * FROM `bloc` WHERE id=?";
+        $sql = "SELECT * FROM `commentaire` WHERE id=?";
         $resultat = $this->executerRequete($sql, array($id_commentaire));
         return $resultat->fetchAll();
     }

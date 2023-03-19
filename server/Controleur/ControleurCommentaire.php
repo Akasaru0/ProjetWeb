@@ -21,5 +21,15 @@ class ControleurCommentaire extends Controleur {
             $this->commentaire->createCommentaire($id_user,$date_creation,$id_bloc,$libelle);
         }
     }
+    public function info(){
+        if( $_SERVER['REQUEST_METHOD'] === "GET")
+        {
+        $id_commentaire = $_GET['id'];
+        $this->commentaire->getCommentaire($id_commentaire);
+        return $this->commentaire->getCommentaire($id_commentaire);
+        }
+        
+        
+    }
 
 }

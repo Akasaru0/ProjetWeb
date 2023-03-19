@@ -30,8 +30,6 @@ class ControleurBloc extends Controleur {
         $id_bloc = $_GET['id'];
         $this->bloc->getBloc($id_bloc);
         return $this->bloc->getBloc($id_bloc);
-        //verifier la requete
-        //créer un bloc (SQL)
         }
         
         

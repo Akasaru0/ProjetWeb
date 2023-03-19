@@ -88,7 +88,7 @@ class ControleurSecurity extends Controleur
                     $this->requete->getSession()->setAttribut("mail",
                     $utilisateur['mail']);
                     header('Content-Type: application/json; charset=utf-8');
-                    echo json_encode([$utilisateur,session_id()]);
+                    echo json_encode($utilisateur);
                 }else{
                     http_response_code(401);
                     die("Vous devez activer votre compte avant de pouvoir continuer");

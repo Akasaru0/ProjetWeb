@@ -12,12 +12,25 @@ function connexion(mail,mdp){
             "mdp":mdp,
         },
         success: function (response) {
-            window.location.href = "/client/";
+            setCookie("username", response["username"])
+            window.location.href = "/client/?routage=menu";
         },
         error: function(response){
             alert(response.responseText);
         },
     });
+}
+
+function setCookie(name, content){
+    // Set the cookie expiration date
+    let date = new Date();
+    date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000)); // Expires in 7 days
+
+    // Set the cookie value
+    let cookieValue = content;
+
+    // Create the cookie
+    document.cookie = `${name}=${cookieValue};expires=${date.toUTCString()};path=/`;
 }
 
 $(document).ready(function() {

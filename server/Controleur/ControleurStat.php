@@ -47,6 +47,21 @@ class ControleurStat extends Controleur {
     }
 
     /**
+     * retourne la moyenne des votes d'un utilisateur
+     */
+    public function getAverageVoteOfUser(){
+        if($this->requete->getSession()->existeAttribut("mail")){
+            $user_id = $this->requete->getSession()->getAttribut("id_user");
+            $average = $this->stat->getAverageVoteOfUser($user_id);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($average);
+        }else{
+            http_response_code(403);
+            die("vous devez être connecté pour continuer");  
+        }
+    }
+
+    /**
      * retourne tous les votes d'un utilisateur
      */
     public function getAllVoteOfUser(){
@@ -58,6 +73,51 @@ class ControleurStat extends Controleur {
         }else{
             http_response_code(403);
             die("vous devez être connecté pour continuer");  
+        }
+    }
+
+    /**
+     * retourne le dernier vote d'un utilisateur
+     */
+    public function getLastVoteOfUser(){
+        if($this->requete->getSession()->existeAttribut("mail")){
+            $user_id = $this->requete->getSession()->getAttribut("id_user");
+            $vote = $this->stat->getLastVoteOfUser($user_id);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($vote);
+        }else{
+            http_response_code(403);
+            die("vous devez être connecté pour continuer");  
+        }
+    }
+
+    /**
+     * retourne tous les commentaires d'un utilisateur
+     */
+    public function getAllCommentOfUser(){
+        if($this->requete->getSession()->existeAttribut("mail")){
+            $user_id = $this->requete->getSession()->getAttribut("id_user");
+            $comments = $this->stat->getAllCommentOfUser($user_id);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($comments);
+        }else{
+            http_response_code(403);
+            die("vous devez être connecté pour continuer");  
+        }
+    }
+
+    /**
+     * retourne tous les votes d'un utilisateur pour le graphique
+     */
+    public function getAllVoteOfUserForChart(){
+        if($this->requete->getSession()->existeAttribut("mail")){
+            $user_id = $this->requete->getSession()->getAttribut("id_user");
+            $votes = $this->stat->getAllVoteOfUserForChart($user_id);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($votes);
+        }else{
+            http_response_code(403);
+            die("vous devez être connecté pour continuer");
         }
     }
 

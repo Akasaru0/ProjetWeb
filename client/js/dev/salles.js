@@ -14,7 +14,7 @@ function getSalles(){
             table.draw();
         },
         error: function(response){
-            window.location.href = "/client/";
+            window.location.href = "/client/?routage=menu";
         },
     });
 }

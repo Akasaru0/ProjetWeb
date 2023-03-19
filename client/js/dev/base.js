@@ -51,7 +51,7 @@ function deconnexion(){
             withCredentials: true
         },
         success: function (response) {
-            window.location.href = "/client/";
+            window.location.href = "/client/?routage=menu";
         },
     });
 }

@@ -171,4 +171,14 @@ class User extends Modele
             return strpos($roles["roles"],$role) !== false; 
         }
     }
+
+    public function setIsConnecte($user_id,$is_connecte){
+        $sql = "update user set is_connecte=? where id=?";
+        $this->executerRequete($sql, array($is_connecte, $user_id));
+    }
+
+    public function setLastConnexion($user_id){
+        $sql = "update user set derniere_connexion=now() where id=?";
+        $this->executerRequete($sql, array($user_id));
+    }
 }

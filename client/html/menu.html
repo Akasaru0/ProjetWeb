@@ -1,12 +1,27 @@
 <div>
-    Le menu.html:
+    <h1 id="h1_user">Hello toi,</h1>
+    <h1>Bienvenue sur SummitScore !</h1>
     <br>
-    Mettre les stats de l'utilisateur en cours (si utilisateur connecté)
+    <div id="connecte" class="card" style="display: none;">
+        <h2 class="card-header">Ici, tu vas retrouver tes statistiques sur ton parcours sur le site et en salle :</h2>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <h5 id="nb_comment" class="list-group-item"></h5>
+            <h5 id="nb_vote" class="list-group-item"></h5>
+            <h5 id="moy_vote" class="list-group-item"></h5>
+            <br>
+            <h5 id="last_comment" class="list-group-item"></h5>
+            <h5 id="last_vote" class="list-group-item"></h5>
+          </ul>
+        </div>
+        <canvas id="chart_user" style="margin-left:10em;margin-right: 10em;"></canvas>
+    </div>
+    <div id="non_connecte" style="display: none;">
+        <h4>Sur ce site tu vas pouvoir consulter les salles d'escalade SummitScore de toute la france !</h4>
+        <h4>Tu auras accès aux différents blocs de chaque salle pour les consulter avant de venir sur place</h4>
+        <h4>Après ta séance d'escalade dans l'une de nos salles tu pourras voter et commenter sur les blocs que tu as fait</h4>
+        <h4>Tu auras également des statistiques sur ton parcours pour voir ton évolution</h4>
+        <h4>Inscris-toi dès maintenant !</h4>
+    </div>
     <br>
-    A vous d'être inventif sur ce qu'il faut afficher
-    <br>
-    (EX: dernier blocs visité --> dernier blocs upvote ou commenter -> NB il n'y a pas de colonne temps -> récupérer le dernier créé en fonction de l'id)
-    <br>
-    <br>
-    Sinon ne rien faire
 </div>

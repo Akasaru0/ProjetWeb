@@ -181,4 +181,15 @@ class User extends Modele
         $sql = "update user set derniere_connexion=now() where id=?";
         $this->executerRequete($sql, array($user_id));
     }
+
+    public function editRole($idUtilisateur, $role){
+        $sql = "UPDATE utilisateur SET role=? WHERE id=?";
+        $this->executerRequete($sql, array($role, $idUtilisateur));
+    }
+
+    public function getAllUsers(){
+        $sql = "select * from user";
+        $users = $this->executerRequete($sql);
+        return $users->fetchAll();
+    }
 }

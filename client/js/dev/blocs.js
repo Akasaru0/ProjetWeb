@@ -1,3 +1,7 @@
+function colorTable(){
+
+}
+
 function getBlocs(){
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -14,9 +18,10 @@ function getBlocs(){
             var data = response;
             var table = $('#table').DataTable();
             data.forEach(element => {
-                table.row.add([element.description,element.id_couleur,'<a href="/client/?routage=bloc&id='+element.id+'">lien</a>']);
+                table.row.add([element.description,'<div style="background-color:rgb('+element.rgb_code+');height:1em;color:transparent;">'+element.valeur+'</div>','<a href="/client/?routage=bloc&id='+element.id+'">lien</a>']);
             });
             table.draw();
+            colorTable();
         },
         error: function(response){
             alert(response)

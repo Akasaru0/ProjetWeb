@@ -33,7 +33,11 @@ class Salle extends Modele
      * get all activated bloc from salle
      */
     public function getBlocsSalle($idSalle){
-        $sql = "select * from bloc where id_salle=? and etat=1";
+        $sql = "SELECT b.id, b.img_path, b.description, b.id_couleur, b.etat, b.id_salle, c.libelle, c.rgb_code, c.valeur
+                FROM bloc b
+                INNER JOIN couleur c 
+                ON b.id_couleur = c.id
+                WHERE id_salle=?";
         $blocs = $this->executerRequete($sql, array($idSalle));
         return $blocs->fetchAll();
     }

@@ -22,9 +22,3 @@ function sendForm(){
         }
     })
 }
-
-$(document).ready(function() {
-    $("#submit").on("click",function(){
-        sendForm();
-    });
-});
